@@ -11,6 +11,7 @@ export const errorHandler = (
     process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
 
   if (res.headersSent || isDebugMode) {
+    console.log(error)
     return next(error)
   }
 

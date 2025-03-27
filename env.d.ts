@@ -4,6 +4,6 @@ declare namespace NodeJS {
     URI: string
     URI_TEST: string
     JWT_SECRET: string
-    NODE_ENV: string
+    NODE_ENV: 'production' | 'development' | 'test'
   }
 }
