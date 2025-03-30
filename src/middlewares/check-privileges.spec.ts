@@ -8,7 +8,7 @@ describe('check privileges', () => {
   let req: Partial<AuthRequest>
   let res: Partial<Response>
   let next: jest.Mock
-  const user = createUser('2', undefined, undefined, undefined, 'user')
+  const user = createUser({ id: '2', role: 'user' })
   const statusError = 403
   const errorMsg = 'Only administrators can perform this action.'
 

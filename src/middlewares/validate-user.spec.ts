@@ -15,7 +15,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when name is too short', () => {
-    req.body = createUser(undefined, 'jo')
+    req.body = createUser({ name: 'jo' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -30,7 +30,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when name is too long', () => {
-    req.body = createUser(undefined, 'a'.repeat(51))
+    req.body = createUser({ name: 'a'.repeat(51) })
 
     validateUser(req as Request, res as Response, next)
 
@@ -47,7 +47,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when the name does not include only letters', () => {
-    req.body = createUser(undefined, '123')
+    req.body = createUser({ name: '123' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -62,7 +62,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when password is too short', () => {
-    req.body = createUser(undefined, undefined, undefined, '12345', undefined)
+    req.body = createUser({ password: '12345' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -77,7 +77,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when password is too long', () => {
-    req.body = createUser(undefined, undefined, undefined, 'a'.repeat(61))
+    req.body = createUser({ password: 'a'.repeat(61) })
 
     validateUser(req as Request, res as Response, next)
 
@@ -94,7 +94,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an invalid email format message', () => {
-    req.body = createUser(undefined, undefined, '')
+    req.body = createUser({ email: '' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -109,12 +109,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when e-mail is too long', () => {
-    req.body = createUser(
-      undefined,
-      undefined,
-      'a'.repeat(245) + '@gmail.com',
-      undefined,
-    )
+    req.body = createUser({ email: 'a'.repeat(245) + '@gmail.com' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -131,7 +126,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return multiples validation errors', () => {
-    req.body = createUser(undefined, 'a', 'a', 'a')
+    req.body = createUser({ name: 'a', email: 'a', password: 'a' })
 
     validateUser(req as Request, res as Response, next)
 

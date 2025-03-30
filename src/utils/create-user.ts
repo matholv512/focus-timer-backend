@@ -1,9 +1,9 @@
-export const createUser = (
-  id: string = '1',
-  name: string = 'José Silva',
-  email: string = 'jose@gmail.com',
-  password: string = '123456',
-  role: 'user' | 'admin' = 'user',
-) => {
-  return { id, name, email, password, role }
-}
+import { UserInterface } from '../interfaces/user.ts'
+
+export const createUser = ({
+  id = '1',
+  name = 'José Silva',
+  email = 'jose@gmail.com',
+  password = '123456',
+  role = 'user',
+}: Partial<UserInterface> = {}) => ({ id, name, email, password, role })
