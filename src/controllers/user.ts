@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { User } from '../models/User.ts'
 import { UserInterface } from '../interfaces/user.ts'
-import { BadRequestError, NotFoundError } from '../errors/Custom-errors.ts'
+import { NotFoundError } from '../errors/Custom-errors.ts'
 import { hashPassword } from '../utils/hash.ts'
 import { AuthRequest } from '../interfaces/auth.ts'
 
@@ -9,13 +9,24 @@ export const getAllUsers = async (req: Request, res: Response) => {
   const users: UserInterface[] = await User.find({}, '-password')
 
   if (!users.length) {
-    throw new BadRequestError('No users found.')
+    throw new NotFoundError('No users found.')
   }
 
   res.status(200).json({
     message: 'Listing all users successfully.',
     users,
   })
+}
+
+export const getUserById = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const user = await User.findById(id, '-password')
+
+  if (!user) {
+    throw new NotFoundError('User not found.')
+  }
+
+  res.status(200).json({ message: 'User found successfully.', user })
 }
 
 export const getUserData = async (req: AuthRequest, res: Response) => {

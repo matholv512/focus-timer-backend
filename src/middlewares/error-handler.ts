@@ -7,8 +7,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction,
 ): void => {
-  const isDebugMode =
-    process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
+  const isDebugMode = process.env.NODE_ENV === 'development'
 
   if (res.headersSent || isDebugMode) {
     console.log(error)

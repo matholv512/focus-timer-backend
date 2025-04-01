@@ -5,6 +5,7 @@ import {
   editUser,
   getAllUsers,
   getUserData,
+  getUserById,
 } from '../controllers/user.ts'
 import { auth } from '../middlewares/auth.ts'
 import { validateUser } from '../middlewares/validate-user.ts'
@@ -15,6 +16,7 @@ import { speedLimiter } from '../middlewares/rate-limiter.ts'
 export const userRouter = Router()
 
 userRouter.get('/users', speedLimiter, auth, checkPrivileges, getAllUsers)
+userRouter.get('/users/:id', speedLimiter, auth, checkPrivileges, getUserById)
 userRouter.get('/me', auth, getUserData)
 userRouter.post(
   '/users',
