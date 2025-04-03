@@ -19,6 +19,7 @@ describe('user service', () => {
 
   beforeAll(async () => {
     await mongoose.connect(process.env.URI_TEST)
+
     app = express()
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
@@ -32,6 +33,10 @@ describe('user service', () => {
 
     app.use(router)
     app.use(errorHandler)
+  })
+
+  beforeEach(async () => {
+    await mongoose.connection.db?.collection('users').deleteMany({})
   })
 
   afterAll(async () => {
@@ -51,8 +56,12 @@ describe('user service', () => {
 
   it('should return data for all users', async () => {
     const { name, email, password } = createUser()
-    await request(app).post('/users').send({ name, email, password })
-    await request(app).post('/users').send({ name, email, password })
+
+    await Promise.all([
+      request(app).post('/users').send({ name, email, password }),
+      request(app).post('/users').send({ name, email, password }),
+      request(app).post('/users').send({ name, email, password }),
+    ])
 
     const response = await request(app).get('/users')
     expect(response.status).toBe(200)
@@ -63,7 +72,14 @@ describe('user service', () => {
   })
 
   it('should find user by id', async () => {
-    const response = await request(app).get(`/users/${user.id}`)
+    const { name, email, password } = createUser()
+    const userResponse = await request(app)
+      .post('/users')
+      .send({ name, email, password })
+
+    const response = await request(app).get(
+      `/users/${userResponse.body.user.id}`,
+    )
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('user')
     expect(response.body).toHaveProperty('message')
@@ -87,8 +103,13 @@ describe('user service', () => {
   })
 
   it('should edit a user successfully', async () => {
+    const { name, email, password } = createUser()
+    const userResponse = await request(app)
+      .post('/users')
+      .send({ name, email, password })
+
     const response = await request(app)
-      .put(`/users/${user.id}`)
+      .put(`/users/${userResponse.body.user.id}`)
       .send(createUser({ name: 'marcelo', email: 'marcelo@gmail.com' }))
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('user')
@@ -109,7 +130,14 @@ describe('user service', () => {
   })
 
   it('should delete a user successfully', async () => {
-    const response = await request(app).delete(`/users/${user.id}`)
+    const { name, email, password } = createUser()
+    const userResponse = await request(app)
+      .post('/users')
+      .send({ name, email, password })
+
+    const response = await request(app).delete(
+      `/users/${userResponse.body.user.id}`,
+    )
     expect(response.body).toHaveProperty('message')
     expect(response.status).toBe(200)
     expect(response.body.message).toBe('User deleted successfully.')

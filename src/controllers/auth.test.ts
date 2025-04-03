@@ -2,6 +2,7 @@ import 'dotenv/config'
 import mongoose from 'mongoose'
 import express, { Express, Router } from 'express'
 import { login, logout } from './auth.ts'
+import * as userController from '../controllers/user.ts'
 import { errorHandler } from '../middlewares/error-handler.ts'
 import request from 'supertest'
 import { createUser } from '../utils/create-user.ts'
@@ -9,18 +10,26 @@ import { verifyToken } from '../utils/verify-token.ts'
 
 describe('auth service', () => {
   let app: Express
-  const user = createUser()
+
   beforeAll(async () => {
     await mongoose.connect(process.env.URI_TEST)
+
     app = express()
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
     const router = Router()
+    router.post('/users', userController.createUser)
     router.post('/auth', login)
     router.delete('/auth', logout)
     app.use(router)
 
     app.use(errorHandler)
+
+    await request(app).post('/users').send(createUser())
+  })
+
+  beforeEach(async () => {
+    await mongoose.connection.db?.collection('users').deleteMany({})
   })
 
   afterAll(async () => {
@@ -28,7 +37,8 @@ describe('auth service', () => {
   })
 
   it('should authenticate a valid user', async () => {
-    const { email, password } = user
+    const { name, email, password } = createUser()
+    await request(app).post('/users').send({ name, email, password })
 
     const response = await request(app).post('/auth').send({ email, password })
     expect(response.status).toBe(200)
@@ -72,7 +82,8 @@ describe('auth service', () => {
   })
 
   it('should disconnect a logged in user', async () => {
-    const { email, password } = user
+    const { name, email, password } = createUser()
+    await request(app).post('/users').send({ name, email, password })
 
     const loginResponse = await request(app)
       .post('/auth')
