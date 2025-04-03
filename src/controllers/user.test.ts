@@ -1,10 +1,10 @@
-import express, { Router, Express, Response, NextFunction } from 'express'
+import 'dotenv/config'
 import mongoose from 'mongoose'
+import express, { Router, Express, Response, NextFunction } from 'express'
 import * as userController from './user.ts'
 import request from 'supertest'
 import { AuthRequest } from '../interfaces/auth.ts'
 import { createUser } from '../utils/create-user.ts'
-import 'dotenv/config'
 import { errorHandler } from '../middlewares/error-handler.ts'
 
 describe('user service', () => {
@@ -34,8 +34,8 @@ describe('user service', () => {
     app.use(errorHandler)
   })
 
-  afterAll(() => {
-    mongoose.connection.close()
+  afterAll(async () => {
+    await mongoose.connection.close()
   })
 
   it('should create a user successfully', async () => {
