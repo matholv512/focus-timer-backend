@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "npx pkgroll",
-    "test": "cross-env NODE_ENV=test tsx src/config/resetTestDB.ts && jest",
-    "test:silent": "cross-env NODE_ENV=test tsx src/config/resetTestDB.ts && jest --watchAll --silent --noStackTrace"
+    "test": "cross-env NODE_ENV=test tsx src/config/reset-test-db.ts && jest",
+    "test:silent": "cross-env NODE_ENV=test tsx src/config/reset-test-db.ts && jest --watchAll --silent --noStackTrace"
   },
   "author": "",
   "license": "ISC",
