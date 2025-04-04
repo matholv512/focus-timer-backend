@@ -8,7 +8,8 @@ export const auth = (req: AuthRequest, res: Response, next: NextFunction) => {
   const decoded = verifyToken(token) as UserRequest
 
   if (!token || !decoded) {
-    throw new UnauthorizedError()
+    next(new UnauthorizedError())
+    return
   }
 
   req.user = {
