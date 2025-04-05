@@ -1,27 +1,11 @@
 import { Request, Response } from 'express'
-import { User } from '../models/User.ts'
-import { compareHashes } from '../utils/hash.ts'
-import { UnauthorizedError } from '../errors/Custom-errors.ts'
 import { Auth } from '../interfaces/auth.ts'
-import { createToken } from '../services/auth.ts'
+import { authenticateUser } from '../services/auth.ts'
 
 export const login = async (req: Request, res: Response) => {
   const { email, password }: Auth = req.body
 
-  const user = await User.findOne({ email })
-
-  const verifyPass = await compareHashes(password, user?.password)
-
-  if (!user || !verifyPass) {
-    throw new UnauthorizedError('Invalid e-mail or password.')
-  }
-
-  const token = createToken({
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    role: user.role,
-  })
+  const token = authenticateUser(email, password)
 
   res.cookie('token', token, {
     httpOnly: true,
