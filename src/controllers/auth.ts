@@ -5,7 +5,7 @@ import { authenticateUser } from '../services/auth.ts'
 export const login = async (req: Request, res: Response) => {
   const { email, password }: Auth = req.body
 
-  const token = authenticateUser(email, password)
+  const token = await authenticateUser(email, password)
 
   res.cookie('token', token, {
     httpOnly: true,
