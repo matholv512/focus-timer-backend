@@ -7,9 +7,12 @@ export const checkPrivileges = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const { id } = req.params
-  if (id !== req.user?.id && req.user?.role !== 'admin') {
-    next(new ForbiddenError('Only administrators can perform this action.'))
+  const { userId } = req.params
+
+  if (userId !== req.user?.id && req.user?.role !== 'admin') {
+    return next(
+      new ForbiddenError('Only administrators can perform this action.'),
+    )
   }
 
   next()

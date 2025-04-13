@@ -26,10 +26,10 @@ describe('user service', () => {
     const router = Router()
     router.get('/me', mockAuth, userController.getUserData)
     router.get('/users', userController.getAllUsers)
-    router.get('/users/:id', userController.getUserById)
+    router.get('/users/:userId', userController.getUserById)
     router.post('/users', userController.createUser)
-    router.put('/users/:id', userController.editUser)
-    router.delete('/users/:id', userController.deleteUser)
+    router.put('/users/:userId', userController.editUser)
+    router.delete('/users/:userId', userController.deleteUser)
 
     app.use(router)
     app.use(errorHandler)

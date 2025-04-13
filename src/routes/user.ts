@@ -16,7 +16,13 @@ import { speedLimiter } from '../middlewares/rate-limiter.ts'
 export const userRouter = Router()
 
 userRouter.get('/users', speedLimiter, auth, checkPrivileges, getAllUsers)
-userRouter.get('/users/:id', speedLimiter, auth, checkPrivileges, getUserById)
+userRouter.get(
+  '/users/:userId',
+  speedLimiter,
+  auth,
+  checkPrivileges,
+  getUserById,
+)
 userRouter.get('/me', auth, getUserData)
 userRouter.post(
   '/users',
@@ -26,7 +32,7 @@ userRouter.post(
   createUser,
 )
 userRouter.put(
-  '/users/:id',
+  '/users/:userId',
   speedLimiter,
   auth,
   checkPrivileges,
@@ -34,4 +40,10 @@ userRouter.put(
   checkUserExists,
   editUser,
 )
-userRouter.delete('/users/:id', speedLimiter, auth, checkPrivileges, deleteUser)
+userRouter.delete(
+  '/users/:userId',
+  speedLimiter,
+  auth,
+  checkPrivileges,
+  deleteUser,
+)

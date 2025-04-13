@@ -19,8 +19,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
 }
 
 export const getUserById = async (req: Request, res: Response) => {
-  const { id } = req.params
-  const user = await User.findById(id, '-password')
+  const { userId } = req.params
+  const user = await User.findById(userId, '-password')
 
   if (!user) {
     throw new NotFoundError('User not found.')
@@ -53,10 +53,10 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const editUser = async (req: Request, res: Response) => {
   const { name, email, password }: UserInterface = req.body
-  const { id } = req.params
+  const { userId } = req.params
   const hashedPassword = await hashPassword(password)
   const user = await User.findByIdAndUpdate(
-    id,
+    userId,
     {
       name,
       email,
@@ -73,8 +73,8 @@ export const editUser = async (req: Request, res: Response) => {
 }
 
 export const deleteUser = async (req: Request, res: Response) => {
-  const { id } = req.params
-  const user = await User.findById(id)
+  const { userId } = req.params
+  const user = await User.findById(userId)
 
   if (!user) {
     throw new NotFoundError('User not found.')
