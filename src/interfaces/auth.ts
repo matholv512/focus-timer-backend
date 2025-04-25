@@ -1,4 +1,5 @@
 import { Request } from 'express'
+import { TaskDoc } from './task.ts'
 
 export interface Auth {
   email: string
@@ -14,4 +15,5 @@ export interface UserRequest {
 
 export interface AuthRequest extends Request {
   user?: UserRequest
+  task?: TaskDoc
 }
