@@ -1,4 +1,4 @@
-import { UserInterface } from '../interfaces/user.ts'
+import { FakeUser } from '../interfaces/user.ts'
 
 export const createUser = ({
   id = '1',
@@ -6,4 +6,4 @@ export const createUser = ({
   email = 'jose@gmail.com',
   password = '123456',
   role = 'user',
-}: Partial<UserInterface> = {}) => ({ id, name, email, password, role })
+}: Partial<FakeUser> = {}) => ({ id, name, email, password, role })

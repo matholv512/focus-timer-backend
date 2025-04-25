@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { UserInterface } from '../interfaces/user.ts'
+import { UserDoc } from '../interfaces/user.ts'
 
-const userSchema = new Schema<UserInterface>(
+const userSchema = new Schema<UserDoc>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -11,4 +11,4 @@ const userSchema = new Schema<UserInterface>(
   { timestamps: true },
 )
 
-export const User = model<UserInterface>('User', userSchema)
+export const User = model<UserDoc>('User', userSchema)

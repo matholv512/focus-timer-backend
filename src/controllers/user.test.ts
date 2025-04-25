@@ -28,7 +28,7 @@ describe('user service', () => {
     router.get('/users', userController.getAllUsers)
     router.get('/users/:userId', userController.getUserById)
     router.post('/users', userController.createUser)
-    router.put('/users/:userId', userController.editUser)
+    router.put('/users/:userId', userController.updateUser)
     router.delete('/users/:userId', userController.deleteUser)
 
     app.use(router)
@@ -98,7 +98,7 @@ describe('user service', () => {
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('user')
     expect(response.body).toHaveProperty('message')
-    expect(response.body.message).toBe('Successfully Retrieving User Data.')
+    expect(response.body.message).toBe('User data retrieved successfully.')
     expect(response.body.user).toStrictEqual(user)
   })
 
@@ -114,7 +114,7 @@ describe('user service', () => {
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('user')
     expect(response.body).toHaveProperty('message')
-    expect(response.body.message).toBe('User edited successfully.')
+    expect(response.body.message).toBe('User updated successfully.')
     expect(response.body.user.name).toBe('marcelo')
     expect(response.body.user.email).toBe('marcelo@gmail.com')
   })
