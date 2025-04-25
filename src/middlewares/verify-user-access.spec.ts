@@ -1,10 +1,10 @@
 import { Response } from 'express'
 import { AuthRequest } from '../interfaces/auth.ts'
-import { checkPrivileges } from './check-privileges.ts'
+import { verifyUserAccess } from './verify-user-access.ts'
 import { CustomError } from '../errors/Custom-errors.ts'
 import { createUser } from '../utils/create-user.ts'
 
-describe('check privileges', () => {
+describe('verify user access', () => {
   let req: Partial<AuthRequest>
   let res: Partial<Response>
   let next: jest.Mock
@@ -20,7 +20,7 @@ describe('check privileges', () => {
 
   it('should return an error when parameter id is different from the logged in user id', () => {
     req.params = { userId: '1' }
-    checkPrivileges(req as AuthRequest, res as Response, next)
+    verifyUserAccess(req as AuthRequest, res as Response, next)
 
     expect(next).toHaveBeenCalledWith(expect.any(CustomError))
 
@@ -32,7 +32,7 @@ describe('check privileges', () => {
 
   it('should return an error when the parameter id and user id are different and the user role is not admin', () => {
     req.params = { userId: '1' }
-    checkPrivileges(req as AuthRequest, res as Response, next)
+    verifyUserAccess(req as AuthRequest, res as Response, next)
     expect(next).toHaveBeenCalledWith(expect.any(CustomError))
     const error = next.mock.calls[0][0] as CustomError
     expect(error.statusCode).toBe(statusError)
@@ -41,7 +41,7 @@ describe('check privileges', () => {
 
   it('should allow the action when parameter id and user user id are the same', () => {
     req.params = { userId: '2' }
-    checkPrivileges(req as AuthRequest, res as Response, next)
+    verifyUserAccess(req as AuthRequest, res as Response, next)
     expect(next).not.toHaveBeenCalledWith(expect.any(CustomError))
     expect(next).toHaveBeenCalledTimes(1)
   })
@@ -51,7 +51,7 @@ describe('check privileges', () => {
     if (req.user) {
       req.user.role = 'admin'
     }
-    checkPrivileges(req as AuthRequest, res as Response, next)
+    verifyUserAccess(req as AuthRequest, res as Response, next)
     expect(next).not.toHaveBeenCalledWith(expect.any(CustomError))
     expect(next).toHaveBeenCalledTimes(1)
   })
