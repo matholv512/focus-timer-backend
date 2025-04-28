@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { Request, Response, NextFunction } from 'express'
-import { BadRequestError, ValidationErrors } from '../errors/Custom-errors.ts'
+import { BadRequestError, ValidationErrors } from '../errors/custom-errors.ts'
 
 type RequestPart = 'body' | 'params' | 'query'
 

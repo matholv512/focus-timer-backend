@@ -55,12 +55,26 @@ describe('user service', () => {
   })
 
   it('should return data for all users', async () => {
-    const { name, email, password } = createUser()
+    const user1 = createUser({
+      name: 'lucas',
+      email: 'lucas@gmail.com',
+      password: '123456',
+    })
+    const user2 = createUser({
+      name: 'carlos',
+      email: 'carlos@gmail.com',
+      password: '123456',
+    })
+    const user3 = createUser({
+      name: 'danyel',
+      email: 'danyel@gmail.com',
+      password: '123456',
+    })
 
     await Promise.all([
-      request(app).post('/users').send({ name, email, password }),
-      request(app).post('/users').send({ name, email, password }),
-      request(app).post('/users').send({ name, email, password }),
+      request(app).post('/users').send(user1),
+      request(app).post('/users').send(user2),
+      request(app).post('/users').send(user3),
     ])
 
     const response = await request(app).get('/users')

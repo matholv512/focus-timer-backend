@@ -8,7 +8,6 @@ import {
   getUserById,
 } from '../controllers/user.ts'
 import { auth } from '../middlewares/auth.ts'
-import { checkUserExists } from '../middlewares/check-user-exists.ts'
 import { verifyUserAccess } from '../middlewares/verify-user-access.ts'
 import { speedLimiter } from '../middlewares/rate-limiter.ts'
 import {
@@ -37,20 +36,13 @@ userRouter.get(
   getUserById,
 )
 userRouter.get('/me', auth, getUserData)
-userRouter.post(
-  '/users',
-  speedLimiter,
-  validateCreateUser,
-  checkUserExists,
-  createUser,
-)
+userRouter.post('/users', speedLimiter, validateCreateUser, createUser)
 userRouter.put(
   '/users/:userId',
   speedLimiter,
   auth,
   verifyUserAccess,
   validateUpdateUser,
-  checkUserExists,
   updateUser,
 )
 userRouter.delete(

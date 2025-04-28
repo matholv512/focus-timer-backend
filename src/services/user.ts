@@ -1,4 +1,4 @@
-import { NotFoundError } from '../errors/Custom-errors.ts'
+import { NotFoundError } from '../errors/custom-errors.ts'
 import {
   CreateUserPayload,
   UpdateUserPayload,

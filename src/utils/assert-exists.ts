@@ -1,4 +1,4 @@
-import { InternalServerError } from '../errors/Custom-errors.ts'
+import { InternalServerError } from '../errors/custom-errors.ts'
 
 type assertExistsFn = <T>(
   value: T,
