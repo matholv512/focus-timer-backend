@@ -5,7 +5,7 @@ import { login, logout } from './auth.ts'
 import * as userController from '../controllers/user.ts'
 import { errorHandler } from '../middlewares/error-handler.ts'
 import request from 'supertest'
-import { createUser } from '../utils/create-user.ts'
+import { createUser } from '../utils/user-factory.ts'
 import { verifyToken } from '../utils/verify-token.ts'
 
 describe('auth service', () => {

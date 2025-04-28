@@ -4,7 +4,7 @@ import express, { Router, Express, Response, NextFunction } from 'express'
 import * as userController from './user.ts'
 import request from 'supertest'
 import { AuthRequest } from '../interfaces/auth.ts'
-import { createUser } from '../utils/create-user.ts'
+import { createUser } from '../utils/user-factory.ts'
 import { errorHandler } from '../middlewares/error-handler.ts'
 
 describe('user service', () => {

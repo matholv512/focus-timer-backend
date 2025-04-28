@@ -8,18 +8,31 @@ import {
   getUserById,
 } from '../controllers/user.ts'
 import { auth } from '../middlewares/auth.ts'
-import { validateUser } from '../middlewares/validate-user.ts'
 import { checkUserExists } from '../middlewares/check-user-exists.ts'
 import { verifyUserAccess } from '../middlewares/verify-user-access.ts'
 import { speedLimiter } from '../middlewares/rate-limiter.ts'
+import {
+  validateCreateUser,
+  validateDeleteUser,
+  validateGetUser,
+  validateUpdateUser,
+} from '../middlewares/user-validation.ts'
 
 export const userRouter = Router()
 
-userRouter.get('/users', speedLimiter, auth, verifyUserAccess, getAllUsers)
+userRouter.get(
+  '/users',
+  speedLimiter,
+  auth,
+  validateGetUser,
+  verifyUserAccess,
+  getAllUsers,
+)
 userRouter.get(
   '/users/:userId',
   speedLimiter,
   auth,
+  validateGetUser,
   verifyUserAccess,
   getUserById,
 )
@@ -27,7 +40,7 @@ userRouter.get('/me', auth, getUserData)
 userRouter.post(
   '/users',
   speedLimiter,
-  validateUser,
+  validateCreateUser,
   checkUserExists,
   createUser,
 )
@@ -36,7 +49,7 @@ userRouter.put(
   speedLimiter,
   auth,
   verifyUserAccess,
-  validateUser,
+  validateUpdateUser,
   checkUserExists,
   updateUser,
 )
@@ -44,6 +57,7 @@ userRouter.delete(
   '/users/:userId',
   speedLimiter,
   auth,
+  validateDeleteUser,
   verifyUserAccess,
   deleteUser,
 )

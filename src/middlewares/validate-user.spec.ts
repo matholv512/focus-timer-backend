@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { validateUser } from './validate-user.ts'
-import { createUser } from '../utils/create-user.ts'
+import { createUser } from '../utils/user-factory.ts'
 import { ValidationErrors } from '../errors/Custom-errors.ts'
 
 describe('validateUser middleware', () => {

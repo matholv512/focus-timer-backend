@@ -2,7 +2,7 @@ import { Response } from 'express'
 import { AuthRequest } from '../interfaces/auth.ts'
 import { verifyUserAccess } from './verify-user-access.ts'
 import { CustomError } from '../errors/Custom-errors.ts'
-import { createUser } from '../utils/create-user.ts'
+import { createUser } from '../utils/user-factory.ts'
 
 describe('verify user access', () => {
   let req: Partial<AuthRequest>
