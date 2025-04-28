@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import * as userController from './user.ts'
-import { createUser } from '../utils/user-factory.ts'
+import { createUser } from '../../utils/user-factory.ts'
 
-jest.mock('../controllers/user.ts', () => ({
+jest.mock('./user.ts', () => ({
   createUser: jest.fn(),
   updateUser: jest.fn(),
   deleteUser: jest.fn(),

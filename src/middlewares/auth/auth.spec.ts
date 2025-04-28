@@ -1,9 +1,9 @@
 import { Response } from 'express'
-import { AuthRequest } from '../interfaces/auth.ts'
+import { AuthRequest } from '../../interfaces/auth.ts'
 import { auth } from './auth.ts'
-import { createToken } from '../services/auth.ts'
-import { createUser } from '../utils/user-factory.ts'
-import { CustomError } from '../errors/custom-errors.ts'
+import { createToken } from '../../services/auth/auth.ts'
+import { createUser } from '../../utils/user-factory.ts'
+import { CustomError } from '../../errors/custom-errors.ts'
 
 let req: Partial<AuthRequest>
 let res: Partial<Response>

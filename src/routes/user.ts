@@ -6,16 +6,16 @@ import {
   getAllUsers,
   getUserData,
   getUserById,
-} from '../controllers/user.ts'
-import { auth } from '../middlewares/auth.ts'
-import { verifyUserAccess } from '../middlewares/verify-user-access.ts'
+} from '../controllers/user/user.ts'
+import { auth } from '../middlewares/auth/auth.ts'
+import { verifyUserAccess } from '../middlewares/access/verify-user-access.ts'
 import { speedLimiter } from '../middlewares/rate-limiter.ts'
 import {
   validateCreateUser,
   validateDeleteUser,
   validateGetUser,
   validateUpdateUser,
-} from '../middlewares/user-validation.ts'
+} from '../middlewares/validations/user-validation.ts'
 
 export const userRouter = Router()
 

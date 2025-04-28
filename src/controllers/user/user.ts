@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { CreateUserPayload, UpdateUserPayload } from '../interfaces/user.ts'
-import { AuthRequest } from '../interfaces/auth.ts'
-import * as userService from '../services/user.ts'
+import { CreateUserPayload, UpdateUserPayload } from '../../interfaces/user.ts'
+import { AuthRequest } from '../../interfaces/auth.ts'
+import * as userService from '../../services/user/user.ts'
 
 export const getAllUsers = async (req: Request, res: Response) => {
   const users = await userService.getAllUsers()

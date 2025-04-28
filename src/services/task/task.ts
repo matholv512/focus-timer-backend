@@ -1,10 +1,10 @@
-import { NotFoundError } from '../errors/custom-errors.ts'
+import { NotFoundError } from '../../errors/custom-errors.ts'
 import {
   CreateTaskPayload,
   TaskDoc,
   UpdateTaskPayload,
-} from '../interfaces/task.ts'
-import { Task } from '../models/Task.ts'
+} from '../../interfaces/task.ts'
+import { Task } from '../../models/Task.ts'
 
 export const getTaskById = async (taskId: string): Promise<TaskDoc> => {
   const task = await Task.findById(taskId)

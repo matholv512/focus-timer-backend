@@ -1,5 +1,5 @@
-import { AuthRequest } from '../interfaces/auth.ts'
-import { TaskDoc } from '../interfaces/task.ts'
+import { AuthRequest } from '../../interfaces/auth.ts'
+import { TaskDoc } from '../../interfaces/task.ts'
 
 export const canAccessResource = (
   user: AuthRequest['user'],

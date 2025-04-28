@@ -1,8 +1,8 @@
 import { Response, NextFunction } from 'express'
-import { AuthRequest } from '../interfaces/auth.ts'
-import { canAccessTask } from '../services/permissions.ts'
-import { getTaskById } from '../services/task.ts'
-import { ForbiddenError } from '../errors/custom-errors.ts'
+import { AuthRequest } from '../../interfaces/auth.ts'
+import { canAccessTask } from '../../services/permissions/permissions.ts'
+import { getTaskById } from '../../services/task/task.ts'
+import { ForbiddenError } from '../../errors/custom-errors.ts'
 
 export const verifyTaskAccess = async (
   req: AuthRequest,

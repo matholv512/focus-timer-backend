@@ -1,11 +1,11 @@
-import { NotFoundError } from '../errors/custom-errors.ts'
+import { NotFoundError } from '../../errors/custom-errors.ts'
 import {
   CreateUserPayload,
   UpdateUserPayload,
   UserDoc,
-} from '../interfaces/user.ts'
-import { User } from '../models/User.ts'
-import { hashPassword } from '../utils/hash.ts'
+} from '../../interfaces/user.ts'
+import { User } from '../../models/User.ts'
+import { hashPassword } from '../../utils/hash.ts'
 
 export const getAllUsers = async (): Promise<UserDoc[]> => {
   const users = await User.find({}, '-password')

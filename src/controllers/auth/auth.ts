@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { Auth } from '../interfaces/auth.ts'
-import { authenticateUser } from '../services/auth.ts'
+import { Auth } from '../../interfaces/auth.ts'
+import { authenticateUser } from '../../services/auth/auth.ts'
 
 export const login = async (req: Request, res: Response) => {
   const { email, password }: Auth = req.body

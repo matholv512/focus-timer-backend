@@ -1,11 +1,11 @@
 import 'dotenv/config'
 import mongoose from 'mongoose'
 import express, { Router, Express, Response, NextFunction } from 'express'
-import * as userController from './user.ts'
+import * as userController from '../user/user.ts'
 import request from 'supertest'
-import { AuthRequest } from '../interfaces/auth.ts'
-import { createUser } from '../utils/user-factory.ts'
-import { errorHandler } from '../middlewares/error-handler.ts'
+import { AuthRequest } from '../../interfaces/auth.ts'
+import { createUser } from '../../utils/user-factory.ts'
+import { errorHandler } from '../../middlewares/error-handler.ts'
 
 describe('user service', () => {
   const mockAuth = (req: AuthRequest, res: Response, next: NextFunction) => {

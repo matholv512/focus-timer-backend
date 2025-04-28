@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express'
-import { AuthRequest } from '../interfaces/auth.ts'
-import { ForbiddenError } from '../errors/custom-errors.ts'
-import { canAccessResource } from '../services/permissions.ts'
+import { AuthRequest } from '../../interfaces/auth.ts'
+import { ForbiddenError } from '../../errors/custom-errors.ts'
+import { canAccessResource } from '../../services/permissions/permissions.ts'
 
 export const verifyUserAccess = async (
   req: AuthRequest,

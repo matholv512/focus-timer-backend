@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { validateUser } from './validate-user.ts'
-import { createUser } from '../utils/user-factory.ts'
-import { ValidationErrors } from '../errors/custom-errors.ts'
+import { createUser } from '../../utils/user-factory.ts'
+import { ValidationErrors } from '../../errors/custom-errors.ts'
 
 describe('validateUser middleware', () => {
   let req: Partial<Request>

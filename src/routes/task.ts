@@ -4,16 +4,16 @@ import {
   updateTask,
   deleteTask,
   getTasksByUser,
-} from '../controllers/task.ts'
-import { auth } from '../middlewares/auth.ts'
-import { verifyUserAccess } from '../middlewares/verify-user-access.ts'
-import { verifyTaskAccess } from '../middlewares/verify-task-access.ts'
+} from '../controllers/task/task.ts'
+import { auth } from '../middlewares/auth/auth.ts'
+import { verifyUserAccess } from '../middlewares/access/verify-user-access.ts'
+import { verifyTaskAccess } from '../middlewares/access/verify-task-access.ts'
 import {
   validateGetTask,
   validateCreateTask,
   validateUpdateTask,
   validateDeleteTask,
-} from '../middlewares/task-validation.ts'
+} from '../middlewares/validations/task-validation.ts'
 
 export const taskRouter = Router()
 

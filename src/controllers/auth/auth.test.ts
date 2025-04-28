@@ -2,11 +2,11 @@ import 'dotenv/config'
 import mongoose from 'mongoose'
 import express, { Express, Router } from 'express'
 import { login, logout } from './auth.ts'
-import * as userController from '../controllers/user.ts'
-import { errorHandler } from '../middlewares/error-handler.ts'
+import * as userController from '../user/user.ts'
+import { errorHandler } from '../../middlewares/error-handler.ts'
 import request from 'supertest'
-import { createUser } from '../utils/user-factory.ts'
-import { verifyToken } from '../utils/verify-token.ts'
+import { createUser } from '../../utils/user-factory.ts'
+import { verifyToken } from '../../utils/verify-token.ts'
 
 describe('auth service', () => {
   let app: Express

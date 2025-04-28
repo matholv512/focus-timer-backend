@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
-import { User } from '../models/User.ts'
-import { UnauthorizedError } from '../errors/custom-errors.ts'
-import { compareHashes } from '../utils/hash.ts'
+import { User } from '../../models/User.ts'
+import { UnauthorizedError } from '../../errors/custom-errors.ts'
+import { compareHashes } from '../../utils/hash.ts'
 
 export const createToken = (user: {
   id: string
