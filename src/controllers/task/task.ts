@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { CreateTaskPayload, UpdateTaskPayload } from '../interfaces/task.ts'
-import * as taskService from '../services/task.ts'
-import { AuthRequest } from '../interfaces/auth.ts'
-import { assertExists } from '../utils/assert-exists.ts'
+import { CreateTaskPayload, UpdateTaskPayload } from '../../interfaces/task.ts'
+import * as taskService from '../../services/task/task.ts'
+import { AuthRequest } from '../../interfaces/auth.ts'
+import { assertExists } from '../../utils/assert-exists.ts'
 
 export const getTasksByUser = async (req: Request, res: Response) => {
   const { userId } = req.params
