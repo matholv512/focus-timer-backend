@@ -6,14 +6,14 @@ const isTest = process.env.NODE_ENV === 'test'
 
 export const speedLimiter = slowDown({
   windowMs: isTest ? 3000 : 1000 * 60 * 15,
-  delayAfter: 5,
+  delayAfter: isTest ? 3 : 5,
   delayMs: (hits) => (isTest ? hits * 100 : hits * 400),
-  maxDelayMs: 5000,
+  maxDelayMs: isTest ? 1000 : 5000,
 })
 
 export const limiter = rateLimit({
   windowMs: isTest ? 3000 : 1000 * 60 * 15,
-  limit: 10,
+  limit: isTest ? 5 : 10,
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req: Request, res: Response) => {

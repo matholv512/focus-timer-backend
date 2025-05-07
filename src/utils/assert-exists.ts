@@ -2,7 +2,7 @@ import { InternalServerError } from '../errors/custom-errors.ts'
 
 type assertExistsFn = <T>(
   value: T,
-  name: string,
+  name?: string,
 ) => asserts value is NonNullable<T>
 
 export const assertExists: assertExistsFn = <T>(

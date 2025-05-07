@@ -19,14 +19,7 @@ import {
 
 export const userRouter = Router()
 
-userRouter.get(
-  '/users',
-  speedLimiter,
-  auth,
-  validateGetUser,
-  verifyUserAccess,
-  getAllUsers,
-)
+userRouter.get('/users', speedLimiter, auth, verifyUserAccess, getAllUsers)
 userRouter.get(
   '/users/:userId',
   speedLimiter,

@@ -5,7 +5,7 @@ import { login, logout } from './auth.ts'
 import * as userController from '../user/user.ts'
 import { errorHandler } from '../../middlewares/error-handler.ts'
 import request from 'supertest'
-import { createUser } from '../../utils/user-factory.ts'
+import { createFakeUser } from '../../utils/user-factory.ts'
 import { verifyToken } from '../../utils/verify-token.ts'
 
 describe('auth service', () => {
@@ -24,8 +24,6 @@ describe('auth service', () => {
     app.use(router)
 
     app.use(errorHandler)
-
-    await request(app).post('/users').send(createUser())
   })
 
   beforeEach(async () => {
@@ -36,18 +34,18 @@ describe('auth service', () => {
     await mongoose.connection.close()
   })
 
-  it('should authenticate a valid user', async () => {
-    const { name, email, password } = createUser()
+  it('should authenticate a registered user', async () => {
+    const { name, email, password } = createFakeUser()
     await request(app).post('/users').send({ name, email, password })
 
     const response = await request(app).post('/auth').send({ email, password })
     expect(response.status).toBe(200)
-    expect(response.body).toHaveProperty('message')
-    expect(response.body.message).toBe('Successfully logged in.')
-    expect(response.headers).toHaveProperty('set-cookie')
+    expect(response.body).toHaveProperty('message', 'Successfully logged in.')
+
     const token = response.headers['set-cookie'][0]
       .split('token=')[1]
       .split(';')[0]
+
     expect(verifyToken(token)).toMatchObject({
       email: expect.any(String),
       exp: expect.any(Number),
@@ -58,31 +56,37 @@ describe('auth service', () => {
     })
   })
 
-  it('should return an error when we try to authenticate an unregistered user', async () => {
+  it('should return an error for an unregistered user', async () => {
     const response = await request(app)
       .post('/auth')
-      .send({ email: 'carlos888@gmail.com', password: '123456' })
+      .send({ email: 'user@example.com', password: '123456' })
 
     expect(response.status).toBe(401)
-    expect(response.body).toHaveProperty('message')
-    expect(response.body.message).toBe('Invalid e-mail or password.')
+    expect(response.body).toHaveProperty(
+      'message',
+      'Invalid e-mail or password.',
+    )
     expect(response.headers).not.toHaveProperty('set-cookie')
   })
 
-  it('should return an error when we try to authenticate a user with an wrong password', async () => {
-    const { email } = createUser()
+  it('should return an error for incorrect password', async () => {
+    const { name, email, password } = createFakeUser()
+    await request(app).post('/users').send({ name, email, password })
+
     const response = await request(app)
       .post('/auth')
       .send({ email, password: '218941874' })
 
     expect(response.status).toBe(401)
-    expect(response.body).toHaveProperty('message')
-    expect(response.body.message).toBe('Invalid e-mail or password.')
+    expect(response.body).toHaveProperty(
+      'message',
+      'Invalid e-mail or password.',
+    )
     expect(response.headers).not.toHaveProperty('set-cookie')
   })
 
-  it('should disconnect a logged in user', async () => {
-    const { name, email, password } = createUser()
+  it('should clear cookie on logout', async () => {
+    const { name, email, password } = createFakeUser()
     await request(app).post('/users').send({ name, email, password })
 
     const loginResponse = await request(app)
@@ -92,8 +96,10 @@ describe('auth service', () => {
 
     const logoutResponse = await request(app).delete('/auth')
     expect(logoutResponse.status).toBe(200)
-    expect(logoutResponse.body).toHaveProperty('message')
-    expect(logoutResponse.body.message).toBe('Successfully logged out.')
+    expect(logoutResponse.body).toHaveProperty(
+      'message',
+      'Successfully logged out.',
+    )
     expect(logoutResponse.headers).toHaveProperty('set-cookie')
 
     const isEmptyToken =

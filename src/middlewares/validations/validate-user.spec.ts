@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { validateUser } from './validate-user.ts'
-import { createUser } from '../../utils/user-factory.ts'
+import { createFakeUser } from '../../utils/user-factory.ts'
 import { ValidationErrors } from '../../errors/custom-errors.ts'
 
 describe('validateUser middleware', () => {
@@ -15,7 +15,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when name is too short', () => {
-    req.body = createUser({ name: 'jo' })
+    req.body = createFakeUser({ name: 'Jo' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -30,7 +30,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when name is too long', () => {
-    req.body = createUser({ name: 'a'.repeat(51) })
+    req.body = createFakeUser({ name: 'a'.repeat(51) })
 
     validateUser(req as Request, res as Response, next)
 
@@ -46,8 +46,8 @@ describe('validateUser middleware', () => {
     expect(error.errors[0].field).toBe('name')
   })
 
-  it('should return an error when the name does not include only letters', () => {
-    req.body = createUser({ name: '123' })
+  it('should return an error when name contains non-letter characters', () => {
+    req.body = createFakeUser({ name: '123' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -62,7 +62,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when password is too short', () => {
-    req.body = createUser({ password: '12345' })
+    req.body = createFakeUser({ password: '12345' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -77,7 +77,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when password is too long', () => {
-    req.body = createUser({ password: 'a'.repeat(61) })
+    req.body = createFakeUser({ password: 'a'.repeat(61) })
 
     validateUser(req as Request, res as Response, next)
 
@@ -93,8 +93,8 @@ describe('validateUser middleware', () => {
     expect(error.errors[0].field).toBe('password')
   })
 
-  it('should return an invalid email format message', () => {
-    req.body = createUser({ email: '' })
+  it('should return an error when email format is invalid', () => {
+    req.body = createFakeUser({ email: '' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -109,7 +109,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return an error when e-mail is too long', () => {
-    req.body = createUser({ email: 'a'.repeat(245) + '@gmail.com' })
+    req.body = createFakeUser({ email: 'a'.repeat(245) + '@gmail.com' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -126,7 +126,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should return multiples validation errors', () => {
-    req.body = createUser({ name: 'a', email: 'a', password: 'a' })
+    req.body = createFakeUser({ name: 'a', email: 'a', password: 'a' })
 
     validateUser(req as Request, res as Response, next)
 
@@ -153,7 +153,7 @@ describe('validateUser middleware', () => {
   })
 
   it('should create a user successfully', () => {
-    req.body = createUser()
+    req.body = createFakeUser()
 
     validateUser(req as Request, res as Response, next)
 

@@ -2,6 +2,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { CustomError, ValidationErrors } from '../errors/custom-errors.ts'
 import { handleDuplicateKeyError } from '../errors/handle-duplicate-key-error.ts'
+import jwt from 'jsonwebtoken'
 
 export const errorHandler = (
   error: any,
@@ -18,6 +19,19 @@ export const errorHandler = (
 
   if (duplicateKeyError) {
     res.status(duplicateKeyError.statusCode).json(duplicateKeyError.toJSON())
+    return
+  }
+
+  if (
+    error instanceof jwt.JsonWebTokenError ||
+    error instanceof jwt.TokenExpiredError
+  ) {
+    res.status(401).json({
+      message:
+        error instanceof jwt.TokenExpiredError
+          ? 'Token expired.'
+          : 'Invalid token.',
+    })
     return
   }
 
