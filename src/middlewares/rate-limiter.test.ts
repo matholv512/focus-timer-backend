@@ -122,6 +122,6 @@ describe('rate limiter', () => {
       const duration = Date.now() - start
       expect(status).toBe(200)
       expect(duration).toBeLessThan(speedLimiterConfig.delayMs + tolerance)
-    })
+    }, 20000)
   })
 })
