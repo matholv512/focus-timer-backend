@@ -1,23 +1,7 @@
-import jwt from 'jsonwebtoken'
-import 'dotenv/config'
 import { User } from '../../models/User.ts'
 import { UnauthorizedError } from '../../errors/custom-errors.ts'
 import { compareHashes } from '../../utils/hash.ts'
-
-export const createToken = (user: {
-  id: string
-  name: string
-  email: string
-  role: 'user' | 'admin'
-}) => {
-  return jwt.sign(
-    { id: user.id, name: user.name, email: user.email, role: user.role },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: '7d',
-    },
-  )
-}
+import { createToken } from '../../utils/create-token.ts'
 
 export const authenticateUser = async (email: string, password: string) => {
   const user = await User.findOne({ email })

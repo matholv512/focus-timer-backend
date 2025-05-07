@@ -1,7 +1,7 @@
 import { Response } from 'express'
 import { AuthRequest } from '../../interfaces/auth.ts'
 import { auth } from './auth.ts'
-import { createToken } from '../../services/auth/auth.ts'
+import { createToken } from '../../utils/create-token.ts'
 import { createFakeUser } from '../../utils/user-factory.ts'
 import { JsonWebTokenError } from 'jsonwebtoken'
 import { InternalServerError } from '../../errors/custom-errors.ts'
