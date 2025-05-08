@@ -9,7 +9,7 @@ export const getTasksByUser = async (req: Request, res: Response) => {
 
   const tasks = await taskService.getTasksByUser(userId)
 
-  res.status(200).json({ message: 'Listing all tasks successfully.', tasks })
+  res.status(200).json({ message: 'Tasks retrieved successfully.', tasks })
 }
 
 export const createTask = async (req: Request, res: Response) => {
@@ -22,17 +22,15 @@ export const createTask = async (req: Request, res: Response) => {
 }
 
 export const updateTask = async (req: AuthRequest, res: Response) => {
-  const { title, description, completed }: UpdateTaskPayload = req.body
+  const payload: UpdateTaskPayload = req.body
 
   assertExists(req.task, 'Task')
 
-  const updatedTask = await taskService.updateTask(req.task, {
-    title,
-    description,
-    completed,
-  })
+  const updatedTask = await taskService.updateTask(req.task, payload)
 
-  res.status(200).json({ message: 'Task updated successfully.', updatedTask })
+  res
+    .status(200)
+    .json({ message: 'Task updated successfully.', task: updatedTask })
 }
 
 export const deleteTask = async (req: AuthRequest, res: Response) => {

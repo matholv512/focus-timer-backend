@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose'
+import mongoose, { Document, type Types } from 'mongoose'
 
 export interface TaskAttrs {
   title: string
@@ -16,3 +16,7 @@ export type UpdateTaskPayload = Partial<Omit<TaskAttrs, 'userId' | 'title'>> & {
 }
 
 export type TaskDoc = Document & TaskAttrs
+
+export type FakeTask = TaskAttrs & {
+  id: Types.ObjectId
+}
