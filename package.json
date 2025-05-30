@@ -4,6 +4,7 @@
   "description": "focus timer backend",
   "main": "./dist/server.mjs",
   "scripts": {
+    "start": "node dist/server.mjs",
     "dev": "tsx watch src/server.ts",
     "build": "npx pkgroll",
     "test": "cross-env NODE_ENV=test tsx src/config/reset-test-db.ts && jest --runInBand",
