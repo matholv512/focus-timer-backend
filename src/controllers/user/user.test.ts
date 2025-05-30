@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import {
   createUser,
   deleteUser,
@@ -20,6 +19,7 @@ import { errorHandler } from '../../middlewares/error-handler.ts'
 import type { AuthRequest } from '../../interfaces/auth.ts'
 import type { UserAttrs } from '../../interfaces/user.ts'
 import { validateCreateUser } from '../../middlewares/validations/user-validation.ts'
+import { MONGO_URI } from '../../config/env.ts'
 
 let app: Express
 let mockUser: ReturnType<typeof createFakeUser>
@@ -36,7 +36,7 @@ const mockAuth = (req: AuthRequest, res: Response, next: NextFunction) => {
 beforeAll(async () => {
   mockUser = createFakeUser()
 
-  await mongoose.connect(process.env.URI_TEST)
+  await mongoose.connect(MONGO_URI)
 
   app = express()
 

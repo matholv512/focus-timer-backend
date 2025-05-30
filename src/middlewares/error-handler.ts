@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import { CustomError, ValidationErrors } from '../errors/custom-errors.ts'
 import { handleDuplicateKeyError } from '../errors/handle-duplicate-key-error.ts'
 import jwt from 'jsonwebtoken'
+import { isDev } from '../config/env.ts'
 
 export const errorHandler = (
   error: any,
@@ -10,10 +11,9 @@ export const errorHandler = (
   res: Response,
   next: NextFunction,
 ): void => {
-  const isDebugMode = process.env.NODE_ENV === 'development'
   const duplicateKeyError = handleDuplicateKeyError(error)
 
-  if (res.headersSent || isDebugMode) {
+  if (res.headersSent || isDev) {
     return next(error)
   }
 

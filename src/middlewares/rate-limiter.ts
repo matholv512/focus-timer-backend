@@ -1,8 +1,7 @@
 import { slowDown } from 'express-slow-down'
 import { rateLimit } from 'express-rate-limit'
 import { Request, Response } from 'express'
-
-const isTest = process.env.NODE_ENV === 'test'
+import { isTest } from '../config/env.ts'
 
 export const speedLimiter = slowDown({
   windowMs: isTest ? 3000 : 1000 * 60 * 15,

@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import mongoose from 'mongoose'
 import express, { Express, Router } from 'express'
 import { login, logout } from './auth.ts'
@@ -7,12 +6,13 @@ import { errorHandler } from '../../middlewares/error-handler.ts'
 import request from 'supertest'
 import { createFakeUser } from '../../utils/user-factory.ts'
 import { verifyToken } from '../../utils/verify-token.ts'
+import { MONGO_URI } from '../../config/env.ts'
 
 describe('auth service', () => {
   let app: Express
 
   beforeAll(async () => {
-    await mongoose.connect(process.env.URI_TEST)
+    await mongoose.connect(MONGO_URI)
 
     app = express()
     app.use(express.json())

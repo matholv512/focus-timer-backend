@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
-const uri =
-  process.env.NODE_ENV.toLowerCase() === 'test'
-    ? process.env.URI_TEST
-    : process.env.URI
+import { MONGO_URI } from './env.ts'
+const uri = MONGO_URI
 
 export const connectDB = async () => {
   try {

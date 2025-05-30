@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-import 'dotenv/config'
+import { MONGO_URI } from './env.ts'
 
-const uri = process.env.URI_TEST
+const uri = MONGO_URI
 
 export const clearDatabase = async () => {
   await mongoose.connect(uri)
