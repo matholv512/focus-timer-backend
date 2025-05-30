@@ -1,18 +1,14 @@
 import { Request, Response } from 'express'
 import { Auth } from '../../interfaces/auth.ts'
 import { authenticateUser } from '../../services/auth/auth.ts'
+import { setAuthCookie } from '../../utils/cookie.ts'
 
 export const login = async (req: Request, res: Response) => {
   const { email, password }: Auth = req.body
 
   const token = await authenticateUser(email, password)
 
-  res.cookie('token', token, {
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: 'strict',
-    secure: true,
-  })
+  setAuthCookie(res, token)
 
   res.status(200).json({ message: 'Successfully logged in.' })
 }
