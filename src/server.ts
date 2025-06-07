@@ -10,7 +10,15 @@ const port = process.env.PORT
 
 connectDB()
 
-app.use(cors())
+app.use(
+  cors({
+    origin(requestOrigin, callback) {
+      callback(null, requestOrigin)
+    },
+    credentials: true,
+  }),
+)
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(router)
