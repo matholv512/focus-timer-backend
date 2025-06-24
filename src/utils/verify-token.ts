@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
-import { assertExists } from './assert-exists.ts'
+import { UnauthorizedError } from '../errors/custom-errors.ts'
 
 export const verifyToken = (token: string | undefined) => {
-  assertExists(token, 'Token')
+  if (!token) throw new UnauthorizedError()
   return jwt.verify(token, process.env.JWT_SECRET)
 }
